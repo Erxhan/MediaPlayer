@@ -29,6 +29,7 @@ class TrackCell: UITableViewCell {
     func set(track: Track, downloaded: Bool) {
         artistLabel.text   = track.artist
         titleLabel.text    = track.title
+        downloadButton.setTitle("Download", for: .normal)
         
 //        var showDownloadControls = false
         
@@ -38,26 +39,26 @@ class TrackCell: UITableViewCell {
     
     private func configure() {
         contentView.addSubViews(labelsStack, downloadButton)
-        labelsStack.addSubViews(artistLabel, titleLabel)
+        labelsStack.addArrangedSubview(artistLabel)
+        labelsStack.addArrangedSubview(titleLabel)
+        
+        labelsStack.axis = .vertical
+        labelsStack.distribution = .fillProportionally
+        
+        labelsStack.translatesAutoresizingMaskIntoConstraints = false
+        downloadButton.translatesAutoresizingMaskIntoConstraints = false
+        artistLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let padding: CGFloat = 12
         
         let avalaibleSize = contentView.frame.size
         
-        let testWidth = avalaibleSize.width * 80 / 100
-        let testWidth2 = avalaibleSize.width * 20 / 100
-        
         NSLayoutConstraint.activate([
-            labelsStack.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            labelsStack.topAnchor.constraint(equalTo: self.topAnchor),
             labelsStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
             labelsStack.widthAnchor.constraint(equalToConstant: avalaibleSize.width * 80 / 100),
-            labelsStack.heightAnchor.constraint(equalToConstant: avalaibleSize.height),
-            
-//            artistLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -padding),
-//            artistLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
-//
-//            titleLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: padding),
-//            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
+            labelsStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             downloadButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             downloadButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
