@@ -13,4 +13,5 @@ enum SFSymbols {
     static let explorer = UIImage(systemName: "viewfinder.circle")
     static let radio = UIImage(systemName: "dot.radiowaves.left.and.right")
     static let search = UIImage(systemName: "magnifyingglass")
+    static let download = UIImage(systemName: "square.and.arrow.down")
 }

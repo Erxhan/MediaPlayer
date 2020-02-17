@@ -12,8 +12,8 @@ class TrackCell: UITableViewCell {
     
     static let identifier = "TrackCell"
     
-    let artistLabel     = UILabel(frame: .zero)
-    let titleLabel      = UILabel(frame: .zero)
+    let artistLabel     = BodyLabel(frame: .zero)
+    let titleLabel      = TitleLabel(frame: .zero)
     let downloadButton  = UIButton(frame: .zero)
     let labelsStack     = UIStackView(frame: .zero)
     
@@ -27,9 +27,9 @@ class TrackCell: UITableViewCell {
     }
     
     func set(track: Track, downloaded: Bool) {
-        artistLabel.text   = track.artist
-        titleLabel.text    = track.title
-        downloadButton.setTitle("Download", for: .normal)
+        artistLabel.text   = track.artistName
+        titleLabel.text    = track.trackName
+        downloadButton.setImage(SFSymbols.download, for: .normal)
         
 //        var showDownloadControls = false
         
@@ -43,7 +43,7 @@ class TrackCell: UITableViewCell {
         labelsStack.addArrangedSubview(titleLabel)
         
         labelsStack.axis = .vertical
-        labelsStack.distribution = .fillProportionally
+        labelsStack.distribution = .fillEqually
         
         labelsStack.translatesAutoresizingMaskIntoConstraints = false
         downloadButton.translatesAutoresizingMaskIntoConstraints = false
@@ -55,10 +55,10 @@ class TrackCell: UITableViewCell {
         let avalaibleSize = contentView.frame.size
         
         NSLayoutConstraint.activate([
-            labelsStack.topAnchor.constraint(equalTo: self.topAnchor),
+            labelsStack.topAnchor.constraint(equalTo: self.topAnchor, constant: padding),
             labelsStack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
             labelsStack.widthAnchor.constraint(equalToConstant: avalaibleSize.width * 80 / 100),
-            labelsStack.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            labelsStack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -padding),
             
             downloadButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             downloadButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding),
