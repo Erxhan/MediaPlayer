@@ -8,19 +8,21 @@
 
 import Foundation
 
-class Track {
+struct Track: Codable {
     
-    let index: Int
-    let artist: String
-    let title: String
-    let url: URL
+    let trackId: Int
+    let artistName: String
+    let trackName: String
+    let previewUrl: String
     
     var downloaded = false
     
-    init(index: Int, artist: String, title: String, url: URL) {
-        self.index = index
-        self.artist = artist
-        self.title = title
-        self.url = url
+    private enum CodingKeys: String, CodingKey {
+        case trackId, artistName, trackName, previewUrl
     }
+}
+
+struct TracksResult: Codable {
+    let resultCount: Int
+    let results: [Track]
 }

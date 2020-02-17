@@ -16,10 +16,8 @@ class NetworkManager {
     typealias GetTrackResult = (Result<[Track], CustomError>) -> Void
     
     func getTracks(searchTerm: String, completion: @escaping GetTrackResult) {
-        guard var urlComponents = URLComponents(string: baseURL) else { return }
-        urlComponents.query = "media=music&entity=song&term=\(searchTerm)"
         
-        guard let url = urlComponents.url else { return }
+        guard let url = URL(string: "\(baseURL)?media=music&entity=song&term=\(searchTerm)") else { return }
         
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             if let _ = error {
@@ -39,12 +37,12 @@ class NetworkManager {
             
             do {
                 let decoder = JSONDecoder()
-                print(data)
                 let tracksResult = try decoder.decode(TracksResult.self, from: data)
                 print(tracksResult.resultCount)
-                completion(.success(tracksResult.tracks))
-            } catch {
-                completion(.failure(.invalidData))
+                completion(.success(tracksResult.results))
+            } catch (let error) {
+                print(error)
+                completion(.failure(.unableToParseData))
             }
         }
         task.resume()

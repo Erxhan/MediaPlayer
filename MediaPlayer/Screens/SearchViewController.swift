@@ -23,9 +23,9 @@ class SearchViewController: UIViewController {
         view.backgroundColor = .systemBackground
         configureTableView()
         configureSearchController()
-//        for index in 1...100 {
-//            tracks.append(Track(index: index, artist: "Snoop Dog \(index)", title: "What's my name \(index)", url: URL(string: "http://ok.com")!))
-//        }
+        //        for index in 1...100 {
+        //            tracks.append(Track(index: index, artist: "Snoop Dog \(index)", title: "What's my name \(index)", url: URL(string: "http://ok.com")!))
+        //        }
         
         // Do any additional setup after loading the view.
     }
@@ -49,7 +49,7 @@ class SearchViewController: UIViewController {
     }
     
     func updateUI(with tracks: [Track]) {
-        self.tracks.append(contentsOf: tracks)
+        self.tracks = tracks
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
@@ -77,11 +77,12 @@ extension SearchViewController: UITableViewDataSource, UITableViewDelegate {
 
 extension SearchViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let searchTerm = searchController.searchBar.text else { return }
+        guard let searchTerm = searchController.searchBar.text, searchTerm != "" else { return }
         NetworkManager.shared.getTracks(searchTerm: searchTerm) { [weak self] result in
             guard let self = self else { return }
             switch result {
                 case .success(let tracks):
+                    print(tracks)
                     self.updateUI(with: tracks)
                 case .failure(let error):
                     print(error)
